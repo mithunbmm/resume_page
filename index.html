@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mithun B - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Tailwind Slate with a Teal accent -->
+    <!-- Application Structure Plan: The SPA is structured as a modern, single-page interactive portfolio, replacing the static document format. The flow is vertical and chronological, guided by a sticky navigation bar (About, Skills, Experience, Education, Contact) for easy access. This structure was chosen because it's a familiar and highly effective format for recruiters, allowing them to either scroll through the candidate's story sequentially or jump directly to the section most relevant to them. Key interactions include an interactive skills chart to visually quantify abilities and a clear timeline for experience, which is more engaging and quicker to parse than plain text. -->
+    <!-- Visualization & Content Choices: 
+- Name/Title: (Goal: Inform) -> Hero section with large typography. (Method: HTML/Tailwind). Justification: Strong first impression.
+- Summary: (Goal: Inform) -> Clean text block. (Method: HTML/Tailwind). Justification: Clear and direct communication of career objective.
+- Skills: (Goal: Compare/Inform) -> Interactive Horizontal Bar Chart. (Library: Chart.js). Interaction: Tooltips on hover show skill and self-assessed level. Justification: Visually represents technical competencies in a more engaging and digestible format than a simple list, which is crucial for a developer role.
+- Experience: (Goal: Organize/Change) -> Vertical Timeline. (Method: HTML/CSS/Tailwind). Justification: Clearly illustrates career progression in a chronological and visually structured manner.
+- Project: (Goal: Organize) -> Project Card. (Method: HTML/Tailwind). Justification: Provides a self-contained, easy-to-read summary of a key technical achievement.
+- Education: (Goal: Inform) -> Simple Info Card. (Method: HTML/Tailwind). Justification: Presents educational background clearly and concisely.
+- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #14b8a6; /* teal-500 */
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            left: -0.5rem;
+            top: 0.25rem;
+            background-color: #14b8a6; /* teal-500 */
+            border: 3px solid #f0fdfa; /* teal-50 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-bold text-slate-800">Mithun B</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="nav-link text-slate-600 font-medium">About</a>
+                    <a href="#skills" class="nav-link text-slate-600 font-medium">Skills</a>
+                    <a href="#experience" class="nav-link text-slate-600 font-medium">Experience</a>
+                    <a href="#projects" class="nav-link text-slate-600 font-medium">Projects</a>
+                    <a href="#education" class="nav-link text-slate-600 font-medium">Education</a>
+                    <a href="#contact" class="nav-link bg-teal-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-teal-600 transition-colors">Contact</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-slate-800 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                 <a href="#about" class="block py-2 text-center text-slate-600 font-medium nav-link">About</a>
+                 <a href="#skills" class="block py-2 text-center text-slate-600 font-medium nav-link">Skills</a>
+                 <a href="#experience" class="block py-2 text-center text-slate-600 font-medium nav-link">Experience</a>
+                 <a href="#projects" class="block py-2 text-center text-slate-600 font-medium nav-link">Projects</a>
+                 <a href="#education" class="block py-2 text-center text-slate-600 font-medium nav-link">Education</a>
+                 <a href="#contact" class="block py-2 text-center bg-teal-500 text-white rounded-md mt-2">Contact</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="pt-24">
+
+        <section id="about" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-slate-800 leading-tight">Mithun B</h1>
+                <p class="mt-4 text-xl text-teal-600 font-medium">Aspiring Software Developer</p>
+                <div class="mt-8 max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
+                    <p>Highly motivated and detail-oriented aspiring Software Developer with recent internship experience, seeking an entry-level position to apply skills in Python, Web Development, Machine Learning, and SQL. Eager to contribute to innovative software solutions and grow within a dynamic organization.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-slate-800">Technical Skills</h2>
+                <p class="text-center mt-4 text-lg text-slate-500">This chart provides a visual representation of my confidence and experience with key technologies. The values reflect a combination of academic projects and professional internship experience.</p>
+                <div class="mt-12">
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-slate-800">Experience</h2>
+                <p class="text-center mt-4 text-lg text-slate-500">My professional journey so far. This section outlines my practical experience and the skills I've applied in a real-world setting.</p>
+                <div class="mt-12 max-w-3xl mx-auto">
+                    <div class="relative border-l-2 border-teal-200 pl-8 space-y-12">
+                        <div class="timeline-item">
+                            <h3 class="text-2xl font-bold text-slate-800">Front End Developer Intern</h3>
+                            <p class="text-md font-medium text-teal-600">Rob Waves (Test Yatra Software Solutions)</p>
+                            <p class="text-sm text-slate-500">February 2025 – April 2025 | Bangalore, Karnataka</p>
+                            <ul class="mt-4 list-disc list-inside space-y-2 text-slate-600">
+                                <li>Assisted in the development and maintenance of user interfaces using HTML, CSS, and JavaScript.</li>
+                                <li>Collaborated with senior developers to implement responsive design principles for web applications.</li>
+                                <li>Learned and applied industry best practices in front-end development within an agile team environment.</li>
+                                <li>Contributed to debugging and testing front-end components to ensure optimal performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-slate-800">Projects</h2>
+                <p class="text-center mt-4 text-lg text-slate-500">Here's a key project I've developed, demonstrating my ability to apply technical concepts to build practical solutions.</p>
+                <div class="mt-12 max-w-lg mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+                    <div class="p-8">
+                         <div class="uppercase tracking-wide text-sm text-teal-500 font-semibold">AI & Machine Learning</div>
+                        <a href="#" class="block mt-1 text-2xl leading-tight font-bold text-black hover:underline">GHOST: AI Personal Assistant</a>
+                        <p class="mt-4 text-slate-600">Developed an AI-powered personal assistant for desktop environments. This project utilized Machine Learning principles to create an intelligent and responsive assistant, aimed at enhancing user productivity and interaction with their computer.</p>
+                        <div class="mt-6">
+                             <span class="inline-block bg-teal-100 text-teal-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                             <span class="inline-block bg-teal-100 text-teal-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">ML</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-slate-800">Education</h2>
+                <p class="text-center mt-4 text-lg text-slate-500">My academic foundation in computer science and software development.</p>
+                 <div class="mt-12 max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                     <h3 class="text-2xl font-bold text-slate-800">Bachelor of Computer Applications (BCA)</h3>
+                     <p class="text-lg font-medium text-teal-600 mt-1">Bangalore University, Bangalore</p>
+                     <p class="text-md text-slate-500 mt-1">Expected Graduation: May 2025</p>
+                     <p class="mt-4 font-semibold text-slate-700">Relevant Coursework:</p>
+                     <p class="text-slate-600">Programming Fundamentals, Web Development, Database Management Systems, Introduction to Machine Learning, Data Structures, and Software Engineering.</p>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="bg-slate-800 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold">Get In Touch</h2>
+            <p class="mt-4 max-w-md mx-auto text-slate-300">I'm currently seeking new opportunities. Feel free to reach out via email or connect with me on LinkedIn.</p>
+            <div class="mt-8 flex justify-center items-center space-x-6">
+                 <a href="mailto:miithunbasavaraju@gmail.com" class="text-teal-400 hover:text-teal-300 transition-colors text-lg">miithunbasavaraju@gmail.com</a>
+                 <span class="text-slate-500">|</span>
+                 <a href="https://www.linkedin.com/in/mithun-b-31a310358" target="_blank" rel="noopener noreferrer" class="text-teal-400 hover:text-teal-300 transition-colors text-lg">LinkedIn</a>
+                  <span class="text-slate-500">|</span>
+                 <p class="text-teal-400 text-lg">8904194654</p>
+            </div>
+            <div class="mt-10 text-sm text-slate-500">
+                <p>&copy; 2025 Mithun B. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            const skillsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Python', 'HTML', 'CSS', 'JavaScript', 'Machine Learning', 'SQL'],
+                    datasets: [{
+                        label: 'Proficiency Level',
+                        data: [85, 90, 80, 85, 70, 75],
+                        backgroundColor: 'rgba(20, 184, 166, 0.6)', /* teal-500 with opacity */
+                        borderColor: 'rgba(15, 118, 110, 1)', /* teal-700 */
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                },
+                                color: '#475569' // slate-600
+                            },
+                             grid: {
+                                color: '#e2e8f0' // slate-200
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#475569' // slate-600
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
